@@ -1,0 +1,64 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <link rel="stylesheet" href="bootstrap.min.css">
+    <title>Untitled Document</title>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row m-5">
+            <div class="d-flex justify-content-center mb-5">
+                <div class="col-6 border rounded-3 p-5 d-flex justify-content-center">
+                    <div class="d-flex flex-column justify-content-center">
+                        <h1>Scan a barcode</h1>
+                        <input id="input" type="hidden" autofocus>
+                        <div class="text-break">
+                            <p id="data"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+
+        const label = document.getElementById('data');
+        const input = document.getElementById('input');
+
+        let typingTimer;
+        let doneTypingInterval = 500;
+        let done = false;
+
+        window.addEventListener('keyup', (e) => {
+            if (done) {
+                input.value = '';
+                label.innerText = '';
+                done = false;
+            }
+
+            if (!done) {
+                if (e.key !== 'Enter') {
+                    input.value += e.key;
+                    label.innerText = input.value;
+
+                    clearTimeout(typingTimer);
+                    if (input.value) {
+                        typingTimer = setTimeout(doneTyping, doneTypingInterval);
+                    }
+                }
+            }
+        });
+
+        function doneTyping() {
+            done = true;
+            console.log('done typing');
+        }
+    </script>
+</body>
+
+</html>
