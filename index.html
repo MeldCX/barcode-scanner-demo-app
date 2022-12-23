@@ -39,14 +39,26 @@
         const label = document.getElementById('data');
         const input = document.getElementById('input');
 
+        console.log(`Started: input - ${input.value}, focused - ${document.activeElement === input}`);
+
         window.addEventListener('keyup', e => {
-            if (e.key === 'Enter') {
-                label.innerText = input.value;
+            console.log(`Keyup: key - ${e.key}, keyCode - ${e.keyCode}, code - ${e.code}, charCode - ${e.charCode}, input - ${input.value}, focused - ${document.activeElement === input}`);
+
+            if (e.key === 'Enter' || e.keyCode === 189) {
+                label.innerText = e.key === 'Enter' ? input.value : input.value.slice(0, -1);
                 input.value = '';
             }
         });
 
-        setInterval(() => input.focus(), 10);
+        let timestamp = 0;
+        setInterval(() => {
+            input.focus();
+
+            if (Date.now() - timestamp >= 10000) {
+                timestamp = Date.now();
+                console.log(`Focus: input - ${input.value}, focused - ${document.activeElement === input}`);
+            }
+        }, 10);
 
     </script>
 </body>
